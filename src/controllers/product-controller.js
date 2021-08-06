@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose')
 const Product = mongoose.model('Product')
+const ValidationContract = require('../validators/fluent-validator')
 
 //A cada novo Controller no Node é necessário criar uma rota para tal
 exports.get = (req, res, next) => {
@@ -49,6 +50,17 @@ exports.getByTag = (req, res, next) => {
 }
 
 exports.post = (req, res, next) => {
+    let contract = new ValidationContract()
+    contract.hasMinLen(req.body.title, 3, 'O titulo deve conter ao menos 3 caracteres')
+    contract.hasMinLen(req.body.slug, 5, 'O slug deve conter ao menos 5 caracteres')
+    contract.hasMinLen(req.body.description, 5, 'A descrição deve conter ao menos 5 caracteres')
+
+    //Verifica se os dados são válidos
+    if(!contract.isValid()) {
+        res.status(400).send(contract.errors()).end()
+        return
+    }
+
     var product = new Product(req.body)
     product.save()
         .then(x => { // .then funciona como um try e depois o .catch 
