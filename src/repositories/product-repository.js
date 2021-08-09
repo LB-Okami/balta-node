@@ -3,34 +3,38 @@
 const mongoose = require('mongoose')
 const Product = mongoose.model('Product')
 
-exports.get = () => {
-    return Product.find({
+exports.get = async () => {
+    let res = await Product.find({
         active: true
     }, "title price slug")
+    return res
 }
 
-exports.getBySlug = (slug) => {
-    return Product.findOne({ 
+exports.getBySlug = async (slug) => {
+    let res = await Product.findOne({ 
         slug: slug, active: true 
     },  "title price slug")
+    return res
 }
 
-exports.getById = (id) => {
-    return Product.findById(id)
+exports.getById = async (id) => {
+    let res = await Product.findById(id)
+    return res
 }
 
-exports.getByTag = (tag) => {
-    return Product.find({ tags: tag, active: true })
+exports.getByTag = async (tag) => {
+    let res = await Product.find({ tags: tag, active: true })
+    return res
 }
 
 //Para post é diferente 
-exports.create = (data) => {
+exports.create = async (data) => {
     var product = new Product(data)
-    return product.save()
+    await product.save()
 }
 
-exports.update = (data, id) => {
-    return Product.findByIdAndUpdate(id, {
+exports.update = async (data, id) => {
+    await Product.findByIdAndUpdate(id, {
         $set: {
             title: data.title,
             description: data.description,
@@ -40,6 +44,6 @@ exports.update = (data, id) => {
     })
 }
 
-exports.delete = (id) => {
-    return Product.findOneAndRemove(id)
+exports.delete = async (id) => {
+    await Product.findByIdAndDelete(id)
 }
