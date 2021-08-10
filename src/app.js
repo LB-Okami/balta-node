@@ -3,12 +3,14 @@
 const express = require('express')
 const bodyParse = require('body-parser')
 const mongoose = require('mongoose')
+require('dotenv').config()
+const URI = process.env.NODE_ENV
 
 const app = express()
 const router = express.Router()
 
 //Conecta ao banco de dados
-mongoose.connect('mongodb://lucas:TzjGKFDYPLxfQF55@node-str-shard-00-00.ap6s0.mongodb.net:27017,node-str-shard-00-01.ap6s0.mongodb.net:27017,node-str-shard-00-02.ap6s0.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-cb7wv4-shard-0&authSource=admin&retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(`${URI}` , {useNewUrlParser: true, useUnifiedTopology: true});
 
 //Carrega as models
 const Product = require('./models/product')
