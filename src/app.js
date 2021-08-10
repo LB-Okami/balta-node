@@ -12,6 +12,9 @@ mongoose.connect('mongodb://lucas:TzjGKFDYPLxfQF55@node-str-shard-00-00.ap6s0.mo
 
 //Carrega as models
 const Product = require('./models/product')
+const Customer = require('./models/customer')
+const Order = require('./models/order')
+
 
 //Carrega as rotas
 const indexRoute = require('./routes/index-route')
