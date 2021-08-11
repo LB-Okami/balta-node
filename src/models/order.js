@@ -17,15 +17,11 @@ const schema = new Schema({
         required: true,
         default: Date.now
     },
-    createDate: {
+    status: {
         type: String,
         required: true,
         enum: ['created', 'done'],
         default: 'created'
-    },
-    password: {
-        type: String,
-        required: true,
     },
     items: [{
         quantity: {
