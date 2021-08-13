@@ -8,6 +8,14 @@ exports.get = async () => {
     return res
 }
 
+exports.authenticate = async (data) => {
+    let res = await Customer.findOne({
+        email: data.email,
+        password: data.password
+    })
+    return res
+}
+
 //Para post é diferente 
 exports.create = async (data) => {
     var customer = new Customer(data)
