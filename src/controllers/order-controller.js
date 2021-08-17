@@ -3,11 +3,22 @@
 const ValidationContract = require('../validators/fluent-validator')
 const repository = require('../repositories/order-repository')
 const guid = require('guid')
+const authService = require('../services/auth-service')
+
 
 exports.post = async (req, res, next) => {
     try {
+
+        //Recupera o token
+        let token = req.body.token || req.query.token || req.headers['x-access-token']
+
+        //Decodifica o token
+        let data = await authService.decodeToken(token)
+
+
         await repository.create({
-            customer: req.body.customer,
+
+            customer: data.id,
             //Gera um UUID aleatório a cada novo cadastro
             number: guid.raw().substring(0, 6),
             items: req.body.items
@@ -17,6 +28,7 @@ exports.post = async (req, res, next) => {
     catch(error) {
         res.status(400).send({ message: 'Falha ao cadastrar o pedido', error })
     }
+
 }
 
 exports.get = async (req, res, next) => {

@@ -3,9 +3,11 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/order-controller')
+const authService = require('../services/auth-service')
 
-router.get('/', controller.get)
-router.post('/', controller.post)
-router.delete('/admin/:id', controller.delete)
+
+router.get('/', authService.authorize, controller.get)
+router.post('/', authService.authorize, controller.post)
+router.delete('/:id', authService.authorize, controller.delete)
 
 module.exports = router
