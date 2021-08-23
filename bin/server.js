@@ -1,5 +1,5 @@
 const app = require('../src/app');
-const debug = require('debug')('balta:server');
+const debug = require('debug')('lucas:server');
 const http = require('http');
 
 const port = normalizePort(process.env.PORT || '8080');
